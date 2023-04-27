@@ -269,9 +269,6 @@ class FacebookWebDriver extends CoreDriver
             'platform'          => 'ANY',
             'browser'           => self::DEFAULT_BROWSER,
             'name'              => 'Behat Test',
-            'deviceOrientation' => 'portrait',
-            'deviceType'        => 'tablet',
-            'selenium-version'  => '3.5.3'
         ];
     }
 
