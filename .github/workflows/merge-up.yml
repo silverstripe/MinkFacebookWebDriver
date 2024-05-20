@@ -1,21 +1,22 @@
-name: Dispatch CI
+name: Merge-up
 
 on:
-  # At 4:20 AM UTC, only on Thursday and Friday
+  # At 4:20 AM UTC, only on Monday
   schedule:
-    - cron: '20 4 * * 4,5'
+    - cron: '20 4 * * 1'
+  workflow_dispatch:
 
 permissions: {}
 
 jobs:
-  dispatch-ci:
-    name: Dispatch CI
+  merge-up:
+    name: Merge-up
     # Only run cron on the silverstripe account
     if: (github.event_name == 'schedule' && github.repository_owner == 'silverstripe') || (github.event_name != 'schedule')
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       actions: write
     steps:
-      - name: Dispatch CI
-        uses: silverstripe/gha-dispatch-ci@v1
+      - name: Merge-up
+        uses: silverstripe/gha-merge-up@v1
