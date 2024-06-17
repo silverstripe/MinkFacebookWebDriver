@@ -83,7 +83,7 @@ class FacebookWebDriver extends CoreDriver
      * @param string $wdHost The WebDriver host
      */
     public function __construct(
-        $browserName = self::DEFAULT_BROWSER,
+        $browserName = FacebookWebDriver::DEFAULT_BROWSER,
         $desiredCapabilities = [],
         $wdHost = 'http://localhost:4444/wd/hub'
     ) {
@@ -172,7 +172,7 @@ class FacebookWebDriver extends CoreDriver
      * @param string $browserName the name of the browser to start, default is 'chrome'
      * @return $this
      */
-    protected function setBrowserName($browserName = self::DEFAULT_BROWSER)
+    protected function setBrowserName($browserName = FacebookWebDriver::DEFAULT_BROWSER)
     {
         $this->browserName = $browserName;
         return $this;
@@ -265,9 +265,9 @@ class FacebookWebDriver extends CoreDriver
     public static function getDefaultCapabilities()
     {
         return [
-            'browserName'       => self::DEFAULT_BROWSER,
+            'browserName'       => FacebookWebDriver::DEFAULT_BROWSER,
             'platform'          => 'ANY',
-            'browser'           => self::DEFAULT_BROWSER,
+            'browser'           => FacebookWebDriver::DEFAULT_BROWSER,
             'name'              => 'Behat Test',
             'deviceOrientation' => 'portrait',
             'deviceType'        => 'tablet',
@@ -954,7 +954,7 @@ JS;
      */
     public function keyPress($xpath, $char, $modifier = null)
     {
-        $options = self::charToOptions($char, $modifier);
+        $options = FacebookWebDriver::charToOptions($char, $modifier);
         $this->trigger($xpath, 'keypress', $options);
     }
 
@@ -963,7 +963,7 @@ JS;
      */
     public function keyDown($xpath, $char, $modifier = null)
     {
-        $options = self::charToOptions($char, $modifier);
+        $options = FacebookWebDriver::charToOptions($char, $modifier);
         $this->trigger($xpath, 'keydown', $options);
     }
 
@@ -972,7 +972,7 @@ JS;
      */
     public function keyUp($xpath, $char, $modifier = null)
     {
-        $options = self::charToOptions($char, $modifier);
+        $options = FacebookWebDriver::charToOptions($char, $modifier);
         $this->trigger($xpath, 'keyup', $options);
     }
 
