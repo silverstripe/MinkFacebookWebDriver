@@ -1105,7 +1105,7 @@ JS;
      * @param RemoteWebElement|null $parent Optional parent element
      * @return RemoteWebElement
      */
-    private function findElement($xpath, RemoteWebElement $parent = null)
+    private function findElement($xpath, ?RemoteWebElement $parent = null)
     {
         $finder = WebDriverBy::xpath($xpath);
         return $parent
