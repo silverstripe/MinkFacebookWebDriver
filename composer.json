@@ -30,7 +30,8 @@
     "require": {
         "php": "^8.1",
         "behat/mink": "^1.10.0",
-        "php-webdriver/webdriver": "^1.13.1"
+        "php-webdriver/webdriver": "^1.13.1",
+        "friends-of-behat/mink-extension": "^2.7"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7"

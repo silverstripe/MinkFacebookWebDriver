@@ -441,7 +441,7 @@ class FacebookWebDriver extends CoreDriver
 
         $this->started = false;
         try {
-            $this->webDriver->close();
+            $this->webDriver->quit();
         } catch (Exception $e) {
             throw new DriverException('Could not close connection', 0, $e);
         }

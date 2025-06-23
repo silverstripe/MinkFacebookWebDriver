@@ -11,6 +11,7 @@
 namespace SilverStripe\MinkFacebookWebDriver;
 
 use Behat\MinkExtension\ServiceContainer\Driver\Selenium2Factory;
+use Facebook\WebDriver\Remote\WebDriverBrowserType;
 use Symfony\Component\DependencyInjection\Definition;
 
 /**
@@ -38,13 +39,10 @@ class FacebookFactory extends Selenium2Factory
         $extraCapabilities = $config['capabilities']['extra_capabilities'];
         unset($config['capabilities']['extra_capabilities']);
 
-        // PATCH: Disable W3C mode in chromedriver until we have capacity to actively adopt it
-        $extraCapabilities['chromeOptions'] = array_merge(
-            isset($extraCapabilities['chromeOptions']) ? $extraCapabilities['chromeOptions'] : [],
-            ['w3c' => false]
-        );
-
-        $capabilities = array_replace($this->guessCapabilities() ?? [], $extraCapabilities, $config['capabilities']);
+        $capabilities = $config['capabilities'] + ($this->guessCapabilities() ?? []);
+        if ($config['browser'] === WebDriverBrowserType::CHROME) {
+            $capabilities['chromeOptions'] = $extraCapabilities['chromeOptions'];
+        }
 
         // Build driver definition
         return new Definition(FacebookWebDriver::class, [

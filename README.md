@@ -12,33 +12,18 @@ Major updates include:
  - Switch to using facebook/webdriver
  - Selenium optional, can use chromedriver (or other jsonwire protocol servers instead)
  - Default to `chrome` instead of `firefox`
- - Update minimum php version to 5.6
+ - Update minimum php version to 8.1
 
 ## Using the Facebook WebDriver with behat
 
-Subclass `Behat\MinkExtension\ServiceContainer\MinkExtension` and add the new driver factory.
-
-```php
-<?php
-
-namespace SilverStripe\BehatExtension;
-
-use Behat\MinkExtension\ServiceContainer\MinkExtension as BaseMinkExtension;
-use SilverStripe\MinkFacebookWebDriver\FacebookFactory;
-
-class MinkExtension extends BaseMinkExtension
-{
-    public function __construct()
-    {
-        parent::__construct();
-        $this->registerDriverFactory(new FacebookFactory());
-    }
-}
+Install package
+```shell
+composer require silverstripe/mink-facebook-web-driver --dev
 ```
 
 Add this extension to your `behat.yml` (see below)
  
-## Running chromedriver instead of selenium
+## Running chromedriver
 
 Make sure you install chromedriver and have the service running
 
@@ -52,7 +37,7 @@ Only local connections are allowed.
 Set the wb_host to this server instead (substitute `SilverStripe\BehatExtension\MinkExtension`
 for your class).
 
-```
+```yaml
 default:
   suites: []
   extensions:
@@ -63,6 +48,30 @@ default:
         browser: chrome
         wd_host: "http://127.0.0.1:9515" #chromedriver port
 ```
+
+## Running Selenium
+Yml configuration for Docker `selenium/hub:4.9.1` and `selenium/node-chrome:113.0`
+```yaml
+default:
+  extensions:
+    SilverStripe\BehatExtension\MinkExtension:
+     base_url: http://localhost # required
+     default_session: facebook_web_driver
+     javascript_session: facebook_web_driver
+     facebook_web_driver:
+      browser: chrome
+      wd_host: "http://selenium-hub:4444/wd/hub" # or http://localhost:4444/wd/hub
+      capabilities:
+       browser: chrome
+       version: "113.0"
+       platform: linux
+       marionette: true
+       extra_capabilities:
+        chromeOptions:
+         w3c: true
+         args: [ '--no-sandbox' ]
+```
+
 
 ## Common problems
 
