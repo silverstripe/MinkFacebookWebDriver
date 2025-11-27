@@ -52,7 +52,7 @@ Only local connections are allowed.
 Set the wb_host to this server instead (substitute `SilverStripe\BehatExtension\MinkExtension`
 for your class).
 
-```
+```yml
 default:
   suites: []
   extensions:
@@ -62,6 +62,36 @@ default:
       facebook_web_driver:
         browser: chrome
         wd_host: "http://127.0.0.1:9515" #chromedriver port
+```
+
+## Setting timeouts
+
+There are three types of timeout that can be set:
+
+|type|description|
+|---|---|
+|implicit|Specify the amount of time the driver should wait when searching for an element if it is not immediately present.|
+|script|Set the amount of time to wait for an asynchronous script to finish execution before throwing an error.|
+|page|Set the amount of time to wait for a page load to complete before throwing an error.|
+
+The values are in milliseconds.
+
+> [!WARNING]
+> The wiki [advises against using implicit waits](https://github.com/php-webdriver/php-webdriver/wiki/HowTo-Wait#implicit-waits) - only use that if you're still experiencing unexpected timeouts after setting a value for both `script` and `page`.
+
+You can set timeouts in `behat.yml` like so:
+
+```yml
+default:
+  suites: []
+  extensions:
+    SilverStripe\BehatExtension\MinkExtension:
+      #... other stuff here
+      facebook_web_driver:
+        #... other stuff here
+        timeouts:
+          # wait 5 minutes before timing our for a page load
+          page: 300000
 ```
 
 ## Common problems

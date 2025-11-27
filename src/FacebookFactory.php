@@ -11,6 +11,7 @@
 namespace SilverStripe\MinkFacebookWebDriver;
 
 use Behat\MinkExtension\ServiceContainer\Driver\Selenium2Factory;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\Definition;
 
 /**
@@ -47,11 +48,15 @@ class FacebookFactory extends Selenium2Factory
         $capabilities = array_replace($this->guessCapabilities() ?? [], $extraCapabilities, $config['capabilities']);
 
         // Build driver definition
-        return new Definition(FacebookWebDriver::class, [
+        $definition = new Definition(FacebookWebDriver::class, [
             $config['browser'],
             $capabilities,
             $config['wd_host'],
         ]);
+        if (!empty($config['timeouts'])) {
+            $definition->addMethodCall('setTimeouts', [$config['timeouts']]);
+        }
+        return $definition;
     }
 
     /**
@@ -91,5 +96,16 @@ class FacebookFactory extends Selenium2Factory
                 ->scalarNode('browser')->defaultValue(FacebookWebDriver::DEFAULT_BROWSER)->end()
             ->end();
         return $node;
+    }
+
+    public function configure(ArrayNodeDefinition $builder)
+    {
+        parent::configure($builder);
+        $builder->children()
+            ->arrayNode('timeouts')->children()
+                ->integerNode('script')->end()
+                ->integerNode('implicit')->end()
+                ->integerNode('page')->end()
+            ->end();
     }
 }
